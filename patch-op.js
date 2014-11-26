@@ -42,6 +42,13 @@ function removeNode(domNode, vNode) {
     var parentNode = domNode.parentNode
 
     if (parentNode) {
+         if (domNode.nodeType === 3) {
+            opLog($(domNode).cssSelector(), 'contents().get(' + $(domNode).index() + ').remove');
+        }
+        else {
+            opLog($(domNode).cssSelector(), 'remove');
+        }
+
         parentNode.removeChild(domNode)
     }
 
@@ -54,6 +61,8 @@ function insertNode(parentNode, vNode, renderOptions) {
     var newNode = render(vNode, renderOptions)
 
     if (parentNode) {
+        opLog($(parentNode).cssSelector(), 'append', newNode.nodeType === 3 ? newNode.textContent : newNode.outerHTML);
+
         parentNode.appendChild(newNode)
     }
 
@@ -64,6 +73,8 @@ function stringPatch(domNode, leftVNode, vText, renderOptions) {
     var newNode
 
     if (domNode.nodeType === 3) {
+        opLog($(domNode).cssSelector(), 'contents().get(' + $(domNode).index() + ').nodeValue=' + JSON.stringify(vText.text) + ';');
+
         domNode.replaceData(0, domNode.length, vText.text)
         newNode = domNode
     } else {
@@ -71,6 +82,8 @@ function stringPatch(domNode, leftVNode, vText, renderOptions) {
         newNode = render(vText, renderOptions)
 
         if (parentNode) {
+            opLog($(domNode).cssSelector(), 'replaceWith', newNode.outerHTML || newNode.textContent);
+
             parentNode.replaceChild(newNode, domNode)
         }
     }
@@ -102,6 +115,14 @@ function vNodePatch(domNode, leftVNode, vNode, renderOptions) {
     var newNode = render(vNode, renderOptions)
 
     if (parentNode) {
+        if (domNode.nodeType === 3) {
+            var nodeIndex = $(domNode).index();
+            opLog($(domNode).cssSelector(),  'contents().eq(' + nodeIndex +  ')' + '.replaceWith', newNode.outerHTML);
+        }
+        else {
+            opLog($(domNode).cssSelector(),  'replaceWith', newNode.outerHTML);
+        }
+
         parentNode.replaceChild(newNode, domNode)
     }
 

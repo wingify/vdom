@@ -54,8 +54,12 @@ function patchObject(node, props, previous, propName, propValue) {
             var attrValue = propValue[attrName]
 
             if (attrValue === undefined) {
+                opLog($(node).cssSelector(), 'removeAttr', attrName);
+
                 node.removeAttribute(attrName)
             } else {
+                opLog($(node).cssSelector(), 'attr', attrName, attrValue);
+
                 node.setAttribute(attrName, attrValue)
             }
         }
