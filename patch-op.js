@@ -42,8 +42,9 @@ function removeNode(domNode, vNode) {
     var parentNode = domNode.parentNode
 
     if (parentNode) {
-         if (domNode.nodeType === 3) {
-            opLog($(domNode).cssSelector(), 'contents().get(' + $(domNode).index() + ').remove');
+        if (domNode.nodeType === 3) {
+            var nodeIndex = [].splice.call(parentNode.childNodes, 0).indexOf(domNode);
+            opLog($(domNode).cssSelector(), 'contents().get(' + nodeIndex + ').remove');
         }
         else {
             opLog($(domNode).cssSelector(), 'remove');
@@ -73,7 +74,8 @@ function stringPatch(domNode, leftVNode, vText, renderOptions) {
     var newNode
 
     if (domNode.nodeType === 3) {
-        opLog($(domNode).cssSelector(), 'contents().get(' + $(domNode).index() + ').nodeValue=' + JSON.stringify(vText.text) + ';');
+        var nodeIndex = [].splice.call(domNode.parentNode.childNodes, 0).indexOf(domNode);
+        opLog($(domNode).cssSelector(), 'contents().get(' + nodeIndex + ').nodeValue=' + JSON.stringify(vText.text) + ';');
 
         domNode.replaceData(0, domNode.length, vText.text)
         newNode = domNode
@@ -116,7 +118,7 @@ function vNodePatch(domNode, leftVNode, vNode, renderOptions) {
 
     if (parentNode) {
         if (domNode.nodeType === 3) {
-            var nodeIndex = $(domNode).index();
+            var nodeIndex = [].splice.call(parentNode.childNodes, 0).indexOf(domNode);
             opLog($(domNode).cssSelector(),  'contents().eq(' + nodeIndex +  ')' + '.replaceWith', newNode.outerHTML);
         }
         else {
