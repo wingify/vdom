@@ -62,7 +62,22 @@ function insertNode(parentNode, vNode, renderOptions) {
     var newNode = render(vNode, renderOptions)
 
     if (parentNode) {
-        opLog($(parentNode).cssSelector(), 'append', newNode.nodeType === 3 ? newNode.textContent : newNode.outerHTML);
+
+        // If something is being inserted in BODY, means that siblings have
+        // added to the edited node. In that case we can't use `append`
+        // operation due to localized (not actual tree) DOM here. Instead use `after` op.
+        if (parentNode.tagName.toLowerCase() === 'body') {
+            if (parentNode.lastChild.nodeType === 3) {
+                var nodeIndex = parentNode.childNodes.length - 1;
+                opLog($(parentNode).cssSelector(), 'contents().eq(' + nodeIndex + ').after', newNode.nodeType === 3 ? newNode.textContent : newNode.outerHTML);
+            }
+            else {
+                opLog($(parentNode.lastChild).cssSelector(), 'after', newNode.nodeType === 3 ? newNode.textContent : newNode.outerHTML);
+            }
+        }
+        else {
+            opLog($(parentNode).cssSelector(), 'append', newNode.nodeType === 3 ? newNode.textContent : newNode.outerHTML);
+        }
 
         parentNode.appendChild(newNode)
     }
