@@ -43,7 +43,7 @@ function removeNode(domNode, vNode) {
 
     if (parentNode) {
         if (domNode.nodeType === 3) {
-            var nodeIndex = [].splice.call(parentNode.childNodes, 0).indexOf(domNode);
+            var nodeIndex = [].slice.call(parentNode.childNodes, 0).indexOf(domNode);
             opLog($(domNode).cssSelector(), 'contents().get(' + nodeIndex + ').remove');
         }
         else {
@@ -89,7 +89,7 @@ function stringPatch(domNode, leftVNode, vText, renderOptions) {
     var newNode
 
     if (domNode.nodeType === 3) {
-        var nodeIndex = [].splice.call(domNode.parentNode.childNodes, 0).indexOf(domNode);
+        var nodeIndex = [].slice.call(domNode.parentNode.childNodes, 0).indexOf(domNode);
         opLog($(domNode).cssSelector(), 'contents().get(' + nodeIndex + ').nodeValue=' + JSON.stringify(vText.text) + ';');
 
         domNode.replaceData(0, domNode.length, vText.text)
@@ -133,7 +133,7 @@ function vNodePatch(domNode, leftVNode, vNode, renderOptions) {
 
     if (parentNode) {
         if (domNode.nodeType === 3) {
-            var nodeIndex = [].splice.call(parentNode.childNodes, 0).indexOf(domNode);
+            var nodeIndex = [].slice.call(parentNode.childNodes).indexOf(domNode);
             opLog($(domNode).cssSelector(),  'contents().eq(' + nodeIndex +  ')' + '.replaceWith', newNode.outerHTML);
         }
         else {
