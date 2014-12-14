@@ -90,7 +90,7 @@ function stringPatch(domNode, leftVNode, vText, renderOptions) {
 
     if (domNode.nodeType === 3) {
         var nodeIndex = [].slice.call(domNode.parentNode.childNodes, 0).indexOf(domNode);
-        opLog($(domNode).cssSelector(), 'contents().get(' + nodeIndex + ').nodeValue=' + JSON.stringify(vText.text) + ';');
+        opLog($(domNode).cssSelector(), 'contents().eq(' + nodeIndex + ').replaceWith', vText.text);
 
         domNode.replaceData(0, domNode.length, vText.text)
         newNode = domNode
