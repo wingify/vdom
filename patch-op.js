@@ -44,7 +44,7 @@ function removeNode(domNode, vNode) {
     if (parentNode) {
         if (domNode.nodeType === 3) {
             var nodeIndex = [].slice.call(parentNode.childNodes, 0).indexOf(domNode);
-            opLog($(domNode).cssSelector(), 'contents().get(' + nodeIndex + ').remove');
+            opLog($(domNode).cssSelector(), 'contents().eq(' + nodeIndex + ').remove');
         }
         else {
             opLog($(domNode).cssSelector(), 'remove');
