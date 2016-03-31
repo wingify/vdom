@@ -6,6 +6,8 @@ var VPatch = require("vtree/vpatch")
 var render = require("./create-element")
 var updateWidget = require("./update-widget")
 
+var $ = window.$ || window.vwoe_$ || window.vwo_$
+
 module.exports = applyPatch
 
 function applyPatch(vpatch, domNode, renderOptions) {
