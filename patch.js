@@ -26,7 +26,7 @@ function patchRecursive(rootNode, patches, renderOptions) {
         }
     }
 
-    for (var i = 0; i < indices.length; i++) {
+    for (var i = indices.length - 1; i >= 0; i++) {
         var nodeIndex = indices[i]
         rootNode = applyPatch(rootNode,
             index[nodeIndex],
