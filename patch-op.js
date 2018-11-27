@@ -64,7 +64,7 @@ function insertNode(parentNode, vNode, renderOptions) {
     var newNode = render(vNode, renderOptions)
 
     if (parentNode) {
-        var modifiedElementClassName = '__vwo_' + Date.now();
+        var modifiedElementClassName = '__vwo_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
         // If something is being inserted in BODY, means that siblings have
         // added to the edited node. In that case we can't use `append`
         // operation due to localized (not actual tree) DOM here. Instead use `after` op.
