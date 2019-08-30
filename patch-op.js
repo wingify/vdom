@@ -71,14 +71,14 @@ function insertNode(parentNode, vNode, renderOptions) {
         if (parentNode.tagName.toLowerCase() === 'body') {
             if (parentNode.lastChild.nodeType === 3) {
                 var nodeIndex = parentNode.childNodes.length - 1;
-                opLog($(parentNode).cssSelector(), 'contents().eq(' + nodeIndex + ').after', newNode.nodeType === 3 ? newNode.textContent : newNode.outerHTML);
+                opLog($(parentNode).cssSelector(), 'contents().eq(' + nodeIndex + ').after', newNode.nodeType === 3 ? 'document.createTextNode(' + newNode.textContent + ')' : newNode.outerHTML);
             }
             else {
-                opLog($(parentNode.lastChild).cssSelector(), 'after', newNode.nodeType === 3 ? newNode.textContent : newNode.outerHTML);
+                opLog($(parentNode.lastChild).cssSelector(), 'after', newNode.nodeType === 3 ? 'document.createTextNode(' + newNode.textContent + ')' : newNode.outerHTML);
             }
         }
         else {
-            opLog($(parentNode).cssSelector(), 'append', newNode.nodeType === 3 ? newNode.textContent : newNode.outerHTML);
+            opLog($(parentNode).cssSelector(), 'append', newNode.nodeType === 3 ? 'document.createTextNode(' + newNode.textContent + ')' : newNode.outerHTML);
         }
 
         parentNode.appendChild(newNode)
